@@ -1,0 +1,41 @@
+name: Huggingface Login
+description: "Login to Huggingface using token"
+author: osbm
+branding:
+  icon: hugging-face
+  color: yellow
+
+inputs:
+  username:
+    description: "Huggingface Username"
+    required: true
+  key:
+    description: "Huggingface token"
+    required: true
+
+  add_to_git_credentials:
+    description: "Add to git credentials"
+    required: false
+    default: "true"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install huggingface-hub
+      shell: bash
+      run: |
+        pip install huggingface-hub
+    
+    - name: Login to Huggingface
+      shell: bash
+      run: |
+        mkdir -p ~/.cache/huggingface
+        echo "${{ inputs.key }}" > ~/.cache/huggingface/token
+
+    - name: Add to git credentials
+      shell: bash
+      if: inputs.add_to_git_credentials == 'true'
+      run: |
+        git config --global credential.helper store
+        git config --global credential.https://huggingface.co.username ${{ inputs.username }}
+        git config --global credential.https://huggingface.co.password ${{ inputs.key }}
