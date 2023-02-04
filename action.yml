@@ -2,7 +2,7 @@ name: Huggingface Login
 description: "Login to Huggingface using token"
 author: osbm
 branding:
-  icon: hugging-face
+  icon: server
   color: yellow
 
 inputs:
