@@ -16,7 +16,7 @@ inputs:
   add_to_git_credentials:
     description: "Add to git credentials"
     required: false
-    default: "true"
+    default: "false"
 
 runs:
   using: "composite"
